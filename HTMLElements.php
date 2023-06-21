@@ -47,10 +47,20 @@ class HTMLElements
 
     static function createCurrencyConversionForm($tableRatesData)
     {
-        $currencyOptions = '<option selected value="PLN">złoty polski</option>';
+        $fromCurrencyOptions = '<option '.((!isset($_POST['fromCurrency']) || $_POST['fromCurrency'] == 'PLN') 
+        ? 'selected' : '').' value="PLN">złoty polski</option>';
 
         foreach ($tableRatesData as $key => $row) {
-            $currencyOptions .= '<option value="' . $key . '">' . $row['currency'] . '</option>' ;
+            $fromCurrencyOptions .= '<option '.((isset($_POST['fromCurrency']) && $_POST['fromCurrency'] == $key) ? 
+            'selected' : ''). ' value="' . $key . '">' . $row['currency'] . '</option>' ;
+        }
+
+        $toCurrencyOptions = '<option '.((!isset($_POST['toCurrency']) || $_POST['toCurrency'] == 'PLN') 
+        ? 'selected' : '').' value="PLN">złoty polski</option>';
+
+        foreach ($tableRatesData as $key => $row) {
+            $toCurrencyOptions .= '<option '.((isset($_POST['toCurrency']) && $_POST['toCurrency'] == $key) ? 
+            'selected' : ''). ' value="' . $key . '">' . $row['currency'] . '</option>' ;
         }
         
         $htmlCurrencyConversionForm = '<h1 class="mt-4 text-center">Przelicznik walut</h1>
@@ -66,11 +76,11 @@ class HTMLElements
         placeholder="Wpisz kwotę">
         <label for="fromCurrency" class="col-auto">Przelicz z </label>
         <select class="mb-2 col-auto" id="fromCurrency" name="fromCurrency">';
-        $htmlCurrencyConversionForm .= $currencyOptions;      
+        $htmlCurrencyConversionForm .= $fromCurrencyOptions;      
         $htmlCurrencyConversionForm .= '</select>';
         $htmlCurrencyConversionForm .= '<label for="toCurrency" class="col-auto">na </label>
         <select class="mb-2 col-auto" id="toCurrency" name="toCurrency">';
-        $htmlCurrencyConversionForm .= $currencyOptions;    
+        $htmlCurrencyConversionForm .= $toCurrencyOptions;    
         $htmlCurrencyConversionForm .= '</select>
         <input type="submit" class="btn btn-primary col-auto" name="conversionForm-submit" value="Przelicz">
         </div>
