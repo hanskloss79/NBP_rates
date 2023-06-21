@@ -91,8 +91,8 @@ class Database
         $sqlString = 'SELECT COUNT(id) AS ratesNumber FROM rates WHERE created_at = :chosenDate';
         $statement = $this->connection->prepare($sqlString);
         $statement->execute([':chosenDate' => $chosenDate]);
-        $numberOfRows = $statement->fetch()['ratesNumber'];
-        return $numberOfRows==0;
+        $numberOfRows = $statement->fetch();
+        return ($numberOfRows['ratesNumber']>0);
     }
 
     public function insertRates($pulledRates, $date)
