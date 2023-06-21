@@ -82,7 +82,7 @@ class Database
         $sqlString = 'SELECT COUNT(id) AS ratesNumber FROM rates';
         $statement = $this->connection->prepare($sqlString);
         $statement->execute();
-        $numberOfRows = $statement->fetch();
+        $numberOfRows = $statement->fetch()['ratesNumber'];
         return $numberOfRows==0;
     }
 
@@ -91,7 +91,7 @@ class Database
         $sqlString = 'SELECT COUNT(id) AS ratesNumber FROM rates WHERE created_at = :chosenDate';
         $statement = $this->connection->prepare($sqlString);
         $statement->execute([':chosenDate' => $chosenDate]);
-        $numberOfRows = $statement->fetch();
+        $numberOfRows = $statement->fetch()['ratesNumber'];
         return $numberOfRows==0;
     }
 
